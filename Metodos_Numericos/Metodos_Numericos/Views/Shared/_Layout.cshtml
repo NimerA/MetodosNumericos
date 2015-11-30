@@ -1,0 +1,105 @@
+﻿
+@model Metodos_Numericos.Models.BaseModel
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>@Page.Title</title>
+        @RenderSection("head", required: false)
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/Layout.css" rel="stylesheet" />
+        <link href="~/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">@ViewBag.Title</a>
+                </div>
+
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-right", role = "search" }))
+                {
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search for...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Go!</button>
+                      </span>
+                    </div>
+                }
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-arrows-v"></i>2. Soluciones de Ecuaciones de Una Variable<i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop1" class="collapse">
+                                <li>
+                                    <a href="@Url.Action("MetodoBiseccion","Capitulo2")">2.1 Método Bisección</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("MetodoPuntoFijo", "Capitulo2")">2.2 Método de Punto Fijo</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("MetodoNewton", "Capitulo2")">2.3 Método de Newton</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("metodoSecante","Capitulo2")">2.3 Método de La Secante</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("metodoFalsaPosicion","Capitulo2")">2.3 Método de Falsa Posición</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Muller","Capitulo2")">2.6 Método de Müller</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-arrows-v"></i> Capitulo 3 <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop2" class="collapse">
+                                <li>
+                                    <a href="@Url.Action("Lagrange","Capitulo3")">3.1 Interpolación de Lagrange</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("InterNewton","Capitulo3")">3.1 Interpolación Polinomimal de Newton</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("TrazadorSujeto", "Capitulo3")">3.1 Interpolación Mediante Trazadores Cúbicos Sujetos</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("TrazadorNatural", "Capitulo3")">3.1 Interpolación Mediante Trazadores Cúbicos Naturales</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    </body>
+</html>
