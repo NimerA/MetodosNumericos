@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Sistema de ecuaciones por eliminacion de Gauss";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
+        <li role="presentation"><a href="#">Historial</a></li>
+        <li role="presentation"><a href="#">Ayuda</a></li>
+    </ul>
+
+    <form role="form">
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        <h2 class="col-md-offset-4">Entrada</h2>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-4">Valor Interpolar</label>
+            <div class="col-md-5">
+                <input id="index" type="text" class="form-control input-sm" placeholder="">
+            </div>
+            <div class="col-md-1"><input type="submit" id="create" value="+" class="btn btn-primary" /></div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-6">
+                <table id="values" class="table table-striped">
+                    <thead>
+                        <tr></tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-10">
+                <input type="submit" id="submit" value="Evaluar" class="btn btn-primary" name="submitbutton"/>
+                <input type="submit" id="clearValues" value="Limpiar valores" class="btn btn-warning" name="submitbutton" />
+                <input type="submit" id="clear" value="Eliminar matriz" class="btn btn-warning" name="submitbutton" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-md-offset-4 col-md-6">
+            <div id="color" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Salida</h3>
+                </div>
+                <div id="ans" class="panel-body">
+                    
+                </div>
+                <div class="panel-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+        <script src="~/Scripts/jquery-2.1.4.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#index").val("3");
+                $("#create").trigger("click");
+            });
+
+            $("#clear").click(function(event) {
+                event.preventDefault();
+                $("#index").val("");
+                $("#values > tbody").empty();
+                $("#values > thead > tr").empty();
+            });
+
+            $("#clearValues").click(function (event) {
+                event.preventDefault();
+                var y = $("#index").val();
+                for (var i = 0; i < parseInt(y) ; i++) {
+                    for (var j = 0; j < parseInt(y) ; j++) {
+                        $("#" + i + "" + j).val("");
+                    }
+                    
+                }
+            });
+
+            $("#create").click(function (event) {
+                event.preventDefault();
+                $("#values > tbody").empty();
+                $("#values > thead > tr").empty();
+                var y = $("#index").val();
+                if (y !== "") {
+                    for (var i = 0; i < parseInt(y); i++) {
+                        $("#values > thead > tr").append("<th>"+(i+1)+"</th>");
+                    }
+
+                    for (var i = 0; i < parseInt(y) ; i++) {
+                        var c = "";
+                        for (var j = 0; j < parseInt(y); j++) {
+                            c += "<td><input id='"+i+""+j+"' type='text' class='form-control input-sm'></td>";
+                        }
+                        $("#values > tbody").append("<tr id='"+i+"'>"+c+"</tr>");
+                    }
+                }
+                else
+                    alert("Ingrese tamano de la matriz");
+            });
+
+            $("#submit").click(function (event) {
+                event.preventDefault();
+                var values = [];
+                var y = $("#index").val();
+                for (var i = 0; i < parseInt(y) ; i++) {
+                    values[i] = new Array();
+                    for (var j = 0; j < parseInt(y); j++) {
+                        if ($("#" + i + "" + j).val() === "")
+                            alert("Por favor ingrese un valor en la posicion (" + i + "," + j + ")");
+                        else
+                            values[i][j] = $("#" + i + "" + j).val();
+                    }
+                }
+
+                if (values.length === 0) {
+                    alert("Ingrese valores en la tabla");
+                    return;
+                }
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Capitulo6/SistemaEcuacionesInversa",
+                    data: { values: JSON.stringify(values) }
+                })
+                .success(function (res) {
+                    if (res.status === 1) {
+                        $("#color").attr("class", "panel panel-green");
+                    } else {
+                        $("#color").attr("class", "panel panel-red");
+                    }
+                    $("#ans").text(res.Res);
+                });
+            });
+
+            $("body").on("click", "#values .removeRow", function(){
+                event.preventDefault();
+                $(this).closest("tr").remove();
+            });
+
+            
+
+
+        </script>
+</body>
+<footer></footer>
+

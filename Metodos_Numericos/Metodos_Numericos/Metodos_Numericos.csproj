@@ -38,7 +38,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="info.lundin.math">
+      <HintPath>..\packages\info.lundin.math.dll.1.1\lib\net45\info.lundin.math.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -134,6 +141,7 @@
     <Content Include="fonts\font-awesome\scss\_spinning.scss" />
     <Content Include="fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\Metodos.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -150,8 +158,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Capitulo11Controller.cs" />
     <Compile Include="Controllers\Capitulo2Controller.cs" />
     <Compile Include="Controllers\Capitulo3Controller.cs" />
+    <Compile Include="Controllers\Capitulo4Controller.cs" />
+    <Compile Include="Controllers\Capitulo5Controller.cs" />
+    <Compile Include="Controllers\Capitulo6Controller.cs" />
+    <Compile Include="Controllers\Capitulo8Controller.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,15 +173,24 @@
     <Compile Include="Helper\MathParser.cs" />
     <Compile Include="Algoritmos\Algorithms.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\CuadraturaGauss_Model.cs" />
+    <Compile Include="Models\DiferenciacionNumerica_Model.cs" />
+    <Compile Include="Models\DiferenciasFinitas_Model.cs" />
     <Compile Include="Models\falsaPosicion_model.cs" />
     <Compile Include="Models\InterNewton_Model.cs" />
     <Compile Include="Models\LaGrange_Model.cs" />
     <Compile Include="Models\MetodoBiseccion_Model.cs" />
     <Compile Include="Models\Answer_Model.cs" />
+    <Compile Include="Models\MetodoDeEuler_Model.cs" />
     <Compile Include="Models\MetodoNewton_Model.cs" />
     <Compile Include="Models\Metodopuntofijo_model.cs" />
     <Compile Include="Models\metodoSecante_model.cs" />
     <Compile Include="Models\Muller_model.cs" />
+    <Compile Include="Models\ReglaTrapecio_Model.cs" />
+    <Compile Include="Models\RegresionLineal_Model.cs" />
+    <Compile Include="Models\Simpson_Model.cs" />
+    <Compile Include="Models\SistemaEdoRK_Model.cs" />
+    <Compile Include="Models\SolucionEdoRK_Model.cs" />
     <Compile Include="Models\TrazadorCubicoNatural_model.cs" />
     <Compile Include="Models\TrazadorCubicoSujeto_model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -187,6 +209,18 @@
     <Content Include="Views\Capitulo3\TrazadorSujeto.cshtml" />
     <Content Include="Views\Capitulo3\Lagrange.cshtml" />
     <Content Include="Views\Capitulo3\InterNewton.cshtml" />
+    <Content Include="Views\Capitulo6\EliminacionDeGauss.cshtml" />
+    <Content Include="Views\Capitulo6\EliminacionDeGaussJordan.cshtml" />
+    <Content Include="Views\Capitulo6\SistemaEcuacionesInversa.cshtml" />
+    <Content Include="Views\Capitulo5\MetodoDeEuler.cshtml" />
+    <Content Include="Views\Capitulo8\RegresionLineal.cshtml" />
+    <Content Include="Views\Capitulo11\DiferenciasFinitas.cshtml" />
+    <Content Include="Views\Capitulo5\SolucionEdoRK.cshtml" />
+    <Content Include="Views\Capitulo4\ReglaTrapecio.cshtml" />
+    <Content Include="Views\Capitulo4\Simpson.cshtml" />
+    <Content Include="Views\Capitulo4\CuadraturaGauss.cshtml" />
+    <Content Include="Views\Capitulo4\DiferenciacionNumerica.cshtml" />
+    <Content Include="Views\Capitulo5\SistemaEdoRK.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

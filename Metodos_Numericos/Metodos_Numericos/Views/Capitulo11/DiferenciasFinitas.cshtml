@@ -1,0 +1,112 @@
+﻿@model Metodos_Numericos.Models.DiferenciasFinitas
+
+@{
+    ViewBag.Title = "Metodo Lineal de Diferencias Finitas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
+        <li role="presentation"><a href="#">Historial</a></li>
+        <li role="presentation"><a href="#">Ayuda</a></li>
+    </ul>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+
+            <h2 class="col-md-offset-4">Entrada</h2>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-4">Coeficiente de P(x)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.px, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.px, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Coeficiente de Q(x)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.qx, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.qx, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Coeficiente de R(x)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.rx, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.rx, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Extremo A</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.a, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.a, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left">Extremo B</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.b, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.b, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left">Condicion de Frontera A</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.alpha, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.alpha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left">Condicion de Frontera B</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.beta, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.beta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left">Entero N >= 2</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.n, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.n, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" value="Limpiar" class="btn btn-warning" name="submitbutton" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @Html.Action("_Respuesta", Model.ans)
+        </div>
+
+    }
+
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+<footer></footer>
+
+
+

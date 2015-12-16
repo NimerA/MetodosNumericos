@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Globalization;
 using Main;
+using info.lundin.math;
 
 namespace Metodos_Numericos.Algorithms
 {
-    class Pointf
+    public class Pointf
     {
         public decimal X,Y;
 
@@ -17,6 +18,16 @@ namespace Metodos_Numericos.Algorithms
         {
             X = x;
             Y = y;
+        }
+
+    }
+    public class Pointd
+    {
+        public double x, y;
+        public Pointd(double X, double Y)
+        {
+            x = X;
+            y = Y;
         }
 
     }
@@ -363,12 +374,10 @@ namespace Metodos_Numericos.Algorithms
         {
             decimal x0 = X0, x1 = X1, x2 = X2, tol = Tol, n = N;
             decimal h1, h2, d1, d2, d, b, D, E, h, p = decimal.Zero, i;
-
+            string res="";
             //(Paso 1)
             h1 = x1 - x0;
-
             h2 = x2 - x1;
-
             d1 = (F(x1) - F(x0)) / h1;
 
             d2 = (F(x2) - F(x1)) / h2;
@@ -385,9 +394,12 @@ namespace Metodos_Numericos.Algorithms
                 //(Paso 3)
                 b = d2 + h2 * d;
 
-
-                D = Sqrt(((b * b) - 4 * F(x2) * d));
+                var ts = 1;
+                if ((- 4 * F(x2) * d) < 0)
+                    ts = -1;
+                D = Sqrt(((b * b)+(-4 * F(x2) * d) * ts));
                 //(Paso 4)
+
                 if (Math.Abs(b - D) < Math.Abs(b + D))
                     E = b + D;
                 else
@@ -395,6 +407,7 @@ namespace Metodos_Numericos.Algorithms
                 //(Paso 5)
                 h = -2 * F(x2) / E;
                 p = x2 + h;
+                res = p + "" + (ts < 0 ? "+-i" : "");
                 Console.WriteLine("{0} - {1}", i, p);
                 //(Paso 6)
                 if (tol > Math.Abs(h))
@@ -415,13 +428,11 @@ namespace Metodos_Numericos.Algorithms
 
             if (i > n)
             {
-                Console.WriteLine(@"El Procedimiento fallo despues de {0} operaciones", n);
-                return "El Procedimiento fallo despues de {0} operaciones"+ n;
+                return string.Format("El Procedimiento fallo despues de {0} operaciones",n);
             }
             else
             {
-                Console.WriteLine("Solucion: {0} - {1}", i, p);
-                return "Solucion: {0} - {1} " + i+ ", " +p;
+                return string.Format("La Respuesta Correcta es: Iteracion {0} - {1} ",i,res);
             }
 
 
@@ -664,5 +675,596 @@ namespace Metodos_Numericos.Algorithms
             return "El metodo fracaso despues de " + iterador + " iteraciones";
         }
     }
+    //======================================================== DIFRENCIACION MATEMATICA ====================
+        public class DiferenciacionNumerica
+        {
+            public string Calcular(double[] x, double[] fx, double XD, int N)
+            {
+                double DP = 0;
+                var i = 0;
+                try
+                {
+                    while (i <= N)
+                    {
+                        double p = 1;
+                        var j = 0;
+                        while (j <= N)
+                        {
+                            if (i != j)
+                                p = p * (x[i] - x[j]);
+                            j++;
+                        }
+                        var k = 0;
+                        double s = 0;
+                        while (k <= N)
+                        {
+                            if (i != k)
+                            {
+                                double Pone = 1;
+                                j = 0;
+                                while (j <= N)
+                                {
+                                    if (j != i && j != k)
+                                        Pone = Pone * (XD - x[j]);
+                                    j++;
+                                }
+                                s = s + Pone;
+                            }
+                            k++;
+                        }
+                        DP = DP + ((fx[i] / p) * s);
+                        i++;
+                    }
+
+                    return "La Respuesta Correcta es " + DP;
+                }
+                catch (Exception)
+                {
+                    return "El Metodo Fracaso";
+                }
+            }
+        }
+        //===================================================== REGLA DEl TRAPEZIO ================
+
+        public class ReglaDelTrapezio 
+        {
+            public double fn(string function, double x)
+            {
+                MathParser parser = new MathParser();
+                parser.LocalVariables.Add("x", (decimal)x);
+                var result = parser.Parse(function);
+                return (double)result;
+            }
+
+            public string Calcular(string function, double limiteA, double limiteB, int iteracion)
+            {
+                var suma = 0.0;
+                var area = 0.0;
+                var dx = (limiteB - limiteA) / iteracion;
+                var xi = limiteA;
+                var i = 1;
+                try
+                {
+                    while (i < iteracion)
+                    {
+                        xi = xi + dx;
+                        suma = suma + (2 * fn(function, xi));
+                        i++;
+                    }
+                    area = dx / 2 * ((fn(function, limiteA) + suma + fn(function, limiteB)));
+                    return "La Respuesta Correcta es " + area;
+
+                }
+                catch (Exception)
+                {
+                   return "El Metodo Fracaso";
+                }
+            }
+
+        }
+        //================================================================ SIMPSON =============================
+        public class Simpson 
+        {
+       
+            public double fn(string function, double x)
+            {
+                MathParser parser = new MathParser();
+                parser.LocalVariables.Add("x", (decimal)x);
+                var result = parser.Parse(function);
+                return (double)result;
+            }
+
+            public string Calcular(string function, double a, double b, int N)
+            {
+                try
+                {
+                    var h = (b - a) / N;
+                    var x0 = fn(function, a) + fn(function, b);
+                    var x1 = 0.0;
+                    var x2 = 0.0;
+                    var x = 0.0;
+                    for (int i = 1; i <= N - 1; i++)
+                    {
+                        x = a + (i * h);
+                        if ((i % 2) == 0)
+                            x2 = x2 + fn(function, x);
+                        else
+                            x1 = x1 + fn(function, x);
+
+                    }
+
+                    var result = h * (x0 + (2 * x2) + (4 * x1)) / 3;
+                    return "La Respuesta Correcta es " + result;
+                }
+                catch (Exception)
+                {
+                    return "El Metodo Fracaso";
+                }
+
+            }
+        }
+        //================================================================= CUADRATURAS GAUSS =============
+        public class CuadraturaGauss 
+        {
+
+            public double fn(string function, double x)
+            {
+                MathParser parser = new MathParser();
+                parser.LocalVariables.Add("x", (decimal)x);
+                var result = parser.Parse(function);
+                return (double)result;
+            }
+
+            public string Calcular(string function, double A, double B, int N)
+            {
+                var NP = new int[] { 0, 2, 3, 4, 5, 6 };
+                var IAUX = new int[] { 0, 1, 2, 4, 6, 9, 12 };
+                var Z = new double[] { 0.0, 0.577350269, 0.0, 0.774596669, 0.339981044, 0.861136312, 0.0, 0.538469310, 0.906179846, 0.238619186, 0.661209387, 0.932469514 };
+                var W = new double[] { 0.0, 1.0, 0.888888888, 0.555555555, 0.652145155, 0.347854845, 0.568888888, 0.478628671, 0.236926885, 0.467913935, 0.360761573, 0.171324493 };
+                var I = 1;
+                while (I <= 5)
+                {
+                    if (N == NP[I])
+                    {
+                        goto PASO10;
+                    }
+                    I = I + 1;
+                }
+                return "N no es 2, 3, 4, 5, 6";
+            PASO10:
+                var S = 0.0;
+                var J = IAUX[I];
+                try
+                {
+                    while (J <= IAUX[I + 1] - 1)
+                    {
+                        var ZAUX = (Z[J] * (B - A) + B + A) / 2;
+                        S = S + fn(function, ZAUX) * W[J];
+                        ZAUX = (-Z[J] * (B - A) + A + B) / 2;
+                        S = S + fn(function, ZAUX) * W[J];
+                        J = J + 1;
+                    }
+                }
+                catch (Exception)
+                {
+                    return "El Metodo Fracaso";
+                }
+
+                var AREA = ((B - A) / 2) * S;
+                return "La Respuesta Correcta es " + AREA;
+            }
+        }
+        //================================================ METODO EULER ============
+        public class MetodoEuler 
+        {
+            public List<Pointd> Calcular(string function, double X0, double XF, double Y0, int N)
+            {
+
+                try
+                {
+                    var h = (XF - X0) / N;
+                    List<Pointd> list = new List<Pointd>();
+                    list.Add(new Pointd(X0, Y0));
+
+                    for (int i = 1; i <= N; i++)
+                    {
+                        var exp = new ExpressionParser();
+                        exp.Values.Add("x", X0);
+                        exp.Values.Add("y", Y0);
+                        exp.Values.Add("t", X0);
+                        var result = exp.Parse(function);
+                        Y0 = Y0 + (h * result);
+                        X0 = X0 + (h);
+
+                        list.Add(new Pointd(X0, Y0));
+                    }
+
+                    return list;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+
+        }
+        //========================= SOLUCION RUNGE-KUTTA ================================
+
+        public class SolucionRungeKutta
+        {
+            public List<Pointd> Calcular(string function, double X0, double XF, double Y0, int N)
+            {
+                var h = (XF - X0) / N;
+                var k1 = 0.0;
+                var k2 = 0.0;
+                var k3 = 0.0;
+                var k4 = 0.0;
+
+                List<Pointd> list = new List<Pointd>();
+                list.Add(new Pointd(X0, Y0));
+                try
+                {
+                    for (int i = 1; i <= N; i++)
+                    {
+                        var exp = new ExpressionParser();
+                        exp.Values.Add("x", X0);
+                        exp.Values.Add("t", X0);
+                        exp.Values.Add("y", Y0);
+                        k1 = exp.Parse(function);
+                        var exp2 = new ExpressionParser();
+                        exp2.Values.Add("x", X0 + (h / 2));
+                        exp2.Values.Add("t", X0 + (h / 2));
+                        exp2.Values.Add("y", Y0 + (h * (k1 / 2)));
+                        k2 = exp2.Parse(function);
+                        var exp3 = new ExpressionParser();
+                        exp3.Values.Add("x", X0 + (h / 2));
+                        exp3.Values.Add("t", X0 + (h / 2));
+                        exp3.Values.Add("y", Y0 + (h * (k2 / 2)));
+                        k3 = exp3.Parse(function);
+                        var exp4 = new ExpressionParser();
+                        exp4.Values.Add("x", X0 + (h));
+                        exp4.Values.Add("t", X0 + (h));
+                        exp4.Values.Add("y", Y0 + (h * (k3)));
+                        k4 = exp4.Parse(function);
+                        Y0 = Y0 + ((h / 6) * (k1 + (2 * k2) + (2 * k3) + k4));
+                        X0 = X0 + h;
+                        list.Add(new Pointd(X0, Y0));
+                    }
+
+                    return list;
+
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+
+            }
+        }
+        //========================= SISTEMAS RUNGE-KUTTA ================================
+        public class SistemasRungeKutta 
+        {
+            public double func(double x, double y)
+            {
+                double elevado = Math.Pow(y, 2);
+                return 0.5 * (1 + x) * elevado;
+            }
+
+            //Chicos n es el numero de subintervalos a emplear tiene que solicitarse antes y no puede ser 0
+            public List<Pointd> Calcular(double x0, double y0, double xf, int n)
+            {
+                var list = new List<Pointd>();
+                list.Add(new Pointd(x0, y0));
+                double h, k1, k2, k3, k4;
+
+                h = (xf - x0) / n;
+
+                for (int i = 1; i <= n; i++)
+                {
+                    k1 = func(x0, y0);
+                    k2 = func(x0 + h / 2, y0 + h * k1 / 2);
+                    k3 = func(x0 + h / 2, y0 + h * k2 / 2);
+                    k4 = func(x0 + h, y0 + h * k3);
+                    y0 = y0 + (k1 + 2 * k2 + 2 * k3 + k4) * h / 6;
+                    x0 = x0 + h;
+                    list.Add(new Pointd(x0,y0));
+                }
+                return list;
+            }
+        }
+        //========================= ELIMINACION GAUSS ================================
+        public class EliminacionGauss 
+        {
+            public List<double> Calcular(double[,] a)
+            {
+
+                int filas = a.GetLength(0);
+                int columnas = a.GetLength(1);
+                //INICIALIZANDO RESPUESTAS
+                double[] x = new double[filas];
+                List<double> list = new List<double>();
+                double det = 1;
+                try
+                {
+
+                    //METER LOS DATOS A UN ARREGLO AL VECTOR B
+                    double[] b = new double[filas];
+                    for (int i = 0; i < filas; i++)
+                    {
+                        b[i] = a[i, columnas - 1];
+                    }
+
+                    int n = filas;// numero de  ecuaciones
+                    //INICIA LA FUNCION DE ELIMINACION DE GAUSS
+
+
+                    det = 1; //paso uno
+                    for (int i = 0; i < n - 1; i++)
+                    {
+                        det = det * a[i, i];
+                        if (det == 0)
+                        {
+                            return null;
+                        }
+                        for (int k = i + 1; k < n; k++)
+                        {
+                            for (int j = i + 1; j < n; j++)
+                            {
+                                a[k, j] = a[k, j] - (a[k, i] * a[i, j]) / a[i, i];
+                            }
+                            b[k] = b[k] - (a[k, i] * b[i]) / a[i, i];
+                        }
+                    } //fin del for
+
+                    det = det * a[n - 1, n - 1];
+
+                    if (det == 0)
+                    {
+                        return null;
+                    }
+
+                    x[n - 1] = b[n - 1] / a[n - 1, n - 1];
+
+                    for (int i = n - 1; i >= 0; i--)
+                    {
+                        x[i] = b[i];
+                        for (int j = i + 1; j < n; j = j + 1)
+                        {
+                            x[i] = x[i] - a[i, j] * x[j];
+                        }
+                        x[i] = x[i] / a[i, i];
+                    }
+                    //AQUI TERMIMNA LA FUNCION DE GAUUSS
+
+                    // empezar a asignar las incognitas a el data grid
+                    list.Add(det);
+                    for (int i = 0; i < x.Length; i++)
+                    {
+                        list.Add(x[i]);
+                    }
+
+                    return list;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        //========================= ELIMINACION GAUSS JORDAN ================================
+        public class GaussJordan
+        {
+            public List<double> Calcular(double[,] a)
+            {
+                try
+                {
+                    int x = a.GetLength(0);
+                    int y = a.GetLength(1);
+
+                    double[] r = new double[x];
+                    List<double> list = new List<double>();
+
+
+                    double t, s;
+                    int i, l, j, k, m, n;
+
+                    n = r.Length - 1;
+                    m = n + 1;
+                    for (l = 0; l <= n - 1; l++)
+                    {
+                        j = l;
+                        for (k = l + 1; k <= n; k++)
+                        {
+                            if (!(Math.Abs(a[j, l]) >= Math.Abs(a[k, l])))
+                            {
+                                j = k;
+                            }
+                        }
+
+                        if (!(j == l))
+                        {
+                            for (i = 0; i <= m; i++)
+                            {
+                                t = a[l, i];
+                                a[l, i] = a[j, i];
+                                a[j, i] = t;
+                            }
+                        }
+
+                        for (j = l + 1; j <= n; j++)
+                        {
+                            t = (a[j, l] / a[l, l]);
+                            for (i = 0; i <= m; i++)
+                            {
+                                a[j, i] -= t * a[l, i];
+                            }
+                        }
+                    }
+                    r[n] = a[n, m] / a[n, n];
+                    for (i = 0; i <= n - 1; i++)
+                    {
+                        j = n - i - 1;
+                        s = 0;
+                        for (l = 0; l <= i; l++)
+                        {
+                            k = j + l + 1;
+                            s += a[j, k] * r[k];
+                        }
+                        r[j] = ((a[j, m] - s) / a[j, j]);
+                    }
+
+                    for (int z = 0; z < r.Length; z++)
+                    {
+
+                        list.Add(r[z]);
+                    }
+
+                    return list;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        //========================= MEDIANTE INVERSA ================================
+
+        public class MedianteInversa 
+        {
+
+        }
+        //========================= REGRESION LINEAL ================================
+
+        public class RegresionLineal 
+        {
+            public double Calcular(double[] valoresX, double[] valoresY, double xo)
+            {
+                var m = valoresX.Length;
+                var constante1 = 0.0;
+                var constante2 = 0.0;
+                var constante3 = 0.0;
+                var constante4 = 0.0;
+                var i = 0;
+
+                while (i < m)
+                {
+                    constante1 = constante1 + valoresY[i];
+                    constante2 = constante2 + (valoresX[i] * valoresX[i]);
+                    constante3 = constante3 + valoresX[i];
+                    constante4 = constante4 + (valoresX[i] * valoresY[i]);
+
+                    i = i + 1;
+                }
+                var coeficiente1 = ((constante1 * constante2) - (constante3 * constante4)) /
+                                   ((m * constante2) - (constante3 * constante3));
+
+                var coeficiente2 = ((m * constante4) - (constante1 * constante3)) / ((m * constante2) - (constante3 * constante3));
+
+                var y = coeficiente1 + (xo * coeficiente2);
+
+                return y;
+            }
+        }
+        //========================= DIFERENCIAS FINITAS ================================
+        public class MetodoDiferenciasFinitas 
+        {
+            public double EvaluateFn(string function, double x)
+            {
+                var parser = new MathParser();
+                parser.LocalVariables.Add("x", (decimal)x);
+                var result = parser.Parse(function);
+                return (double)result;
+            }
+
+            public List<Pointd> Calcular(string px, string qx, string rx, double a, double b, double alpha, double beta, int N)
+            {
+                List<Pointd> list = new List<Pointd>();
+
+                if (N < 2)
+                {
+                    return null;
+                }
+
+                var A = new double[N + 1];
+                var B = new double[N + 1];
+                var C = new double[N + 1];
+                var D = new double[N + 1];
+                var L = new double[N + 1];
+                var U = new double[N + 1];
+                var Z = new double[N + 1];
+                var W = new double[N + 2];
+                var Y = new double[N + 2];
+                var X = new double[N + 2];
+
+                var h = (b - a) / (N + 1);
+                var x = a + h;
+                A[0] = (2 + (h * h * EvaluateFn(qx, x)));
+                B[0] = (-1 + ((h / 2) * EvaluateFn(px, x)));
+                D[0] = (-h * h * EvaluateFn(rx, x) + (1 + (h / 2) * EvaluateFn(px, x)) * alpha);
+
+                for (var i = 1; i < N - 1; i++)
+                {
+                    x = a + (i * h);
+                    A[i] = (2 + (h * h * EvaluateFn(qx, x)));
+                    B[i] = (-1 + (h / 2) * EvaluateFn(px, x));
+                    C[i] = (-1 - (h / 2) * EvaluateFn(px, x));
+                    D[i] = (-h * h * EvaluateFn(rx, x));
+                }
+
+                x = b - h;
+                A[N - 1] = (2 + h * h * EvaluateFn(qx, x));
+                C[N - 1] = (-1 - (h / 2) * EvaluateFn(px, x));
+                D[N - 1] = (-h * h * EvaluateFn(rx, x) + (1 - (h / 2) * EvaluateFn(px, x)) * beta);
+
+                L[0] = A[0];
+                U[0] = B[0] / A[0];
+                Z[0] = D[0] / L[0];
+
+                for (var i = 1; i < N - 1; i++)
+                {
+                    L[i] = A[i] - C[i] * U[i - 1];
+                    U[i] = B[i] / L[i];
+                    Z[i] = ((D[i] - C[i] * Z[i - 1]) / L[i]);
+                }
+
+                L[N - 1] = (A[N - 1] - C[N - 1] * U[N - 2]);
+                Z[N - 1] = ((D[N - 1] - C[N - 1] * Z[N - 2]) / L[N - 1]);
+
+                Y[0] = alpha;
+                Y[N + 1] = beta;
+                Y[N] = Z[N - 1];
+
+                W[0] = alpha;
+                W[N + 1] = beta;
+
+                for (var i = N - 1; i > -1; i--)
+                {
+                    Y[i] = Z[i] - U[i] * Y[i + 1];
+                    W[i + 1] = Y[i];
+                }
+
+                for (var i = 0; i <= N + 1; i++)
+                {
+                    X[i] = a + (i * h);
+                }
+
+                for (var i = 0; i < W.Length; i++)
+                {
+                    list.Add(new Pointd(X[i], W[i]));
+                }
+
+                return list;
+            }
+        }
+
+
+
+
+
+
+
+
 
 }

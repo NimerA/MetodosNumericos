@@ -1,0 +1,88 @@
+﻿@model Metodos_Numericos.Models.MetodoBiseccion_Model
+
+
+@{
+    ViewBag.Title = "MetodoBiseccion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
+        <li role="presentation"><a href="#">Historial</a></li>
+        <li role="presentation"><a href="#">Ayuda</a></li>
+    </ul>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+             
+        <div class="form-horizontal">
+            <hr />
+
+            <h2 class="col-md-offset-4">Entrada</h2>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-4">Ecuacion F(x)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.function, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.function, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Extremo Inferior (a)</label>                
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.a, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.a, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Extremo Superior (b)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.b, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.b, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Tolerancia (Tol)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Tol, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.Tol, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left" >Numero de Iteraciones (N)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.Iterator, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.Iterator, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" value="Limpiar" class="btn btn-warning" name="submitbutton" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @Html.Action("_Respuesta",Model.ans)
+        </div>
+
+    }
+
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+<footer>
+
+</footer>

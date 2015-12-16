@@ -1,0 +1,85 @@
+﻿@model Metodos_Numericos.Models.MetodoDeEuler_Model
+
+@{
+    ViewBag.Title = "Metodo de Euler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <ul class="nav nav-pills nav-justified">
+        <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
+        <li role="presentation"><a href="#">Historial</a></li>
+        <li role="presentation"><a href="#">Ayuda</a></li>
+    </ul>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+
+            <h2 class="col-md-offset-4">Entrada</h2>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-4">Ecuacion F(t,y)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.ecuacion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ecuacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Extremo Inferior (a)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.extremoInferior, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.extremoInferior, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Extremo Superior(b)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.extremoSuperior, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.extremoSuperior, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Condicion Inicial Y(0)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.condicionInicial, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.condicionInicial, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label  col-md-4 left">Numero de Espacios (N)</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.numeroEspacios, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.numeroEspacios, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" value="Limpiar" class="btn btn-warning" name="submitbutton" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            @Html.Action("_Respuesta", Model.ans)
+        </div>
+
+    }
+
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+<footer></footer>
