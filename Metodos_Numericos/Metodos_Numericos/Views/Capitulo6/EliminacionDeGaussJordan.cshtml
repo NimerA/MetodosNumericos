@@ -148,7 +148,9 @@
                     } else {
                         $("#color").attr("class", "panel panel-red");
                     }
-                    $("#ans").text(res.Res);
+                    $.each(res.Res, function (index, value) {
+                        $("#ans").append("<li>" + index + " => " + value + "</li>");
+                    });
                 });
             });
 
