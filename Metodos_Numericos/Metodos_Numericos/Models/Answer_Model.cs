@@ -10,4 +10,11 @@ namespace Metodos_Numericos.Models
         public string Res { get; set; }
         public int status { get; set; }
     }
+
+    public class AnswerList_Model : BaseModel
+    {
+        public List<double> Res { get; set; }
+        public string message { get; set; }
+        public int status { get; set; }
+    }
 }
