@@ -11,8 +11,7 @@
         <li role="presentation"><a href="#">Ayuda</a></li>
     </ul>
 
-    @using (Html.BeginForm())
-    {
+    <form role="form">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -20,57 +19,169 @@
 
             <h2 class="col-md-offset-4">Entrada</h2>
 
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <label class="control-label col-md-4">Valores de X</label>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.x, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.x, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-4">Valeores de  F(x)</label>
-                <div class="col-md-6">
-                    @Html.EditorFor(model => model.y, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.y, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            @Html.ValidationSummary( true, "", new
+       {
+           @class = "text-danger"
+       } )
 
             <div class="form-group">
                 <label class="control-label col-md-4">Extremo Inferior (a)</label>
                 <div class="col-md-6">
-                    @Html.EditorFor(model => model.FPOd, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FPOd, "", new { @class = "text-danger" })
+                    @Html.EditorFor( model => model.FPOd, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control"
+                   }
+               } )
+                    @Html.ValidationMessageFor( model => model.FPOd, "", new
+               {
+                   @class = "text-danger"
+               } )
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-4">Extremo Superior (b)</label>
                 <div class="col-md-6">
-                    @Html.EditorFor(model => model.FPNd, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FPNd, "", new { @class = "text-danger" })
+                    @Html.EditorFor( model => model.FPNd, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control"
+                   }
+               } )
+                    @Html.ValidationMessageFor( model => model.FPNd, "", new
+               {
+                   @class = "text-danger"
+               } )
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-2"><input id="x" type="text" class="form-control input-sm" placeholder="x"></div>
+                <div class="col-md-2"><input id="y" type="text" class="form-control input-sm" placeholder="F(x)"></div>
+                <div class="col-md-1"><input type="submit" id="add" value="+" class="btn btn-primary" /></div>
+                <div class="col-md-offset-4 col-md-6">
+                    <table id="values" class="table table-striped">
+                        <thead>
+                            <tr><th>x</th><th>F(x)</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-10">
-                    <input type="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
-                    <input type="submit" value="Limpiar" class="btn btn-warning" name="submitbutton" />
+                    <input type="submit" id="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" id="clear" value="Limpiar" class="btn btn-warning" name="submitbutton" />
                 </div>
             </div>
         </div>
 
         <div>
-            @Html.Action("_Respuesta", Model.ans)
+            <div class="col-md-offset-4 col-md-6">
+                <div id="color" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Salida</h3>
+                    </div>
+                    <div id="ans" class="panel-body">
+
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+            </div>
         </div>
 
-    }
+    </form>
 
 
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#FPOd").val("1.00");
+            $("#FPNd").val("0.00");
+            add(2, 5);
+            add(4, 6);
+            add(5, 9);
+            add(8, 5);
+            add(10, 4);
+            $("#submit").trigger("click");
+        });
+
+        $("#clear").click(function (event) {
+            event.preventDefault();
+            $("#FPOd").val("");
+            $("#FPNd").val("");
+            $("#values > tbody").empty();
+        });
+
+        $("#add").click(function (event) {
+            event.preventDefault();
+            var y = $("#y").val();
+            var x = $("#x").val();
+            if (y !== "" & x !== "") {
+                add(x, y);
+                $("#y").val("");
+                $("#x").val("");
+            }
+            else
+                alert("Ingrese los valores en los campos 'F(x)' y 'x'");
+        });
+
+        $("#submit").click(function (event) {
+            event.preventDefault();
+            if ($("#FPOd").val() === "") {
+                alert("Ingrese limite inferior!");
+                return;
+            }
+
+            if ($("#FPNd").val() === "") {
+                alert("Ingrese limite superior!");
+                return;
+            }
+
+
+            var values = [];
+            $("#values > tbody tr").each(function (index, item) {
+                values.push({ x: item.cells[0].textContent, y: item.cells[1].textContent });
+            });
+
+            if (values.length === 0) {
+                alert("Ingrese valores F(x),x en la tabla");
+                return;
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/Capitulo3/TrazadorSujeto",
+                data: { FPOd: $("#FPOd").val(), FPNd: $("#FPNd").val(), values: values }
+            })
+            .success(function (res) {
+                if (res.status === 1) {
+                    $("#color").attr("class", "panel panel-green");
+                } else {
+                    $("#color").attr("class", "panel panel-red");
+                }
+                $("#ans").text(res.Res);
+            });
+        });
+
+        $("body").on("click", "#values .removeRow", function () {
+            event.preventDefault();
+            $(this).closest("tr").remove();
+        });
+
+        function add(x, y) {
+            $("#values > tbody").append("<tr><td>" + x + "</td><td>" + y + "</td><td><input type='submit' value='x' class='removeRow btn btn-primary' /></tr>");
+        }
+
+
+    </script>
 </body>
 <footer></footer>

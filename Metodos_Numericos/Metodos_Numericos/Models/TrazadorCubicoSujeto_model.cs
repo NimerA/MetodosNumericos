@@ -7,8 +7,11 @@ namespace Metodos_Numericos.Models
 {
     public class TrazadorCubicoSujeto_model:BaseModel
     {
-        public string x { get; set; }
-        public string y { get; set; }
+        public List<Point> values
+        {
+            get;
+            set;
+        }
         public decimal FPOd { get; set; }
         public decimal FPNd { get; set; }
         public Answer_Model ans { get; set; }

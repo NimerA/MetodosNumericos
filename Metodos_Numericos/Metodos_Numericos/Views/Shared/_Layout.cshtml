@@ -32,7 +32,11 @@
                     <a class="navbar-brand">@ViewBag.Title</a>
                 </div>
 
-                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form navbar-right", role = "search" }))
+                @using ( Html.BeginForm( "Search", "Home", FormMethod.Post, new
+                {
+                    @class = "navbar-form navbar-right hidden-xs",
+                    role = "search"
+                } ) )
                 {
                     <div class="input-group">
                       <input type="text" class="form-control" placeholder="Search for...">
@@ -46,7 +50,7 @@
                     <ul class="nav navbar-nav side-nav">
 
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-arrows-v"></i>2. Soluciones de Ecuaciones de Una Variable<i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-arrows-v"></i> 2. Soluciones de Ecuaciones de Una Variable. <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="drop1" class="collapse">
                                 <li>
                                     <a href="@Url.Action("MetodoBiseccion","Capitulo2")">2.1 Método Bisección</a>
@@ -70,19 +74,86 @@
                         </li>
 
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-arrows-v"></i> Capitulo 3 <i class="fa fa-fw fa-caret-down"></i></a>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-arrows-v"></i> 3. Interpolacion y aproximacion polinomial. <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="drop2" class="collapse">
                                 <li>
-                                    <a href="@Url.Action("Lagrange","Capitulo3")">3.1 Interpolación de Lagrange</a>
+                                    <a href="@Url.Action("Lagrange", "Capitulo3")">3.1 Interpolación de Lagrange</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("InterNewton","Capitulo3")">3.1 Interpolación Polinomimal de Newton</a>
+                                    <a href="@Url.Action("InterNewton", "Capitulo3")">3.1 Interpolación Polinomimal de Newton</a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("TrazadorSujeto", "Capitulo3")">3.1 Interpolación Mediante Trazadores Cúbicos Sujetos</a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("TrazadorNatural", "Capitulo3")">3.1 Interpolación Mediante Trazadores Cúbicos Naturales</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop3"><i class="fa fa-fw fa-arrows-v"></i> 4. Diferenciacion e integracion numericas. <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop3" class="collapse">
+                                <li>
+                                    <a href="@Url.Action( "DiferenciacionNumerica", "Capitulo4" )"> 4.1 Diferenciacion Numericas. </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action( "ReglaTrapecio", "Capitulo4" )"> 4.4 Integracion Numerica: Regla de Trapecio. </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action( "Simpson", "Capitulo4" )"> 4.4 Integracion Numerica: Simpson. </a>
+                                </li>
+
+                                <li>
+                                    <a href="@Url.Action( "CuadraturaGauss", "Capitulo4" )"> 4.7 Integracion Numerica: Cuadraturas de Gauss. </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop4"><i class="fa fa-fw fa-arrows-v"></i> 5. Problemas de valor incial para ecuaciones diferenciales ordinarias. <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop4" class="collapse">
+                                <li>
+                                    <a href="@Url.Action( "MetodoDeEuler", "Capitulo5" )"> 5.2 Solucion de Edo: Metodo de Euler. </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action( "SolucionEdoRK", "Capitulo5" )"> 5.4 Solucion de Edo: Runge-Kutta </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SistemaEdoRK", "Capitulo5")"> 5.9 Sistema de Edo: Runge-Kutta </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop5"><i class="fa fa-fw fa-arrows-v"></i> 6. Metodos directos para resolver sistemas lineales <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop5" class="collapse">
+                                <li>
+                                    <a href="@Url.Action("EliminacionDeGauss", "Capitulo6")">6.1 Sistema de ecuaciones por eliminacion de Gauss</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("EliminacionDeGaussJordan", "Capitulo6")">6.2 Sistema de ecuaciones por eliminacion de Gauss Jordan</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("SistemaEcuacionesInversa", "Capitulo6")">6.3 Sistema de ecuaciones mediante la inversa</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop6"><i class="fa fa-fw fa-arrows-v"></i> 8. Teoria de la aproximacion. <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop6" class="collapse">
+                                <li>
+                                    <a href="@Url.Action( "RegresionLineal", "Capitulo8" )"> 8.1 Regresion lineal. </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#drop7"><i class="fa fa-fw fa-arrows-v"></i> 11. Problemas con valor de la frontera para ecuaciones diferenciales ordinarias. <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="drop7" class="collapse">
+                                <li>
+                                    <a href="@Url.Action( "DiferenciasFinitas", "Capitulo11" )"> 11.1 Metodo Lineal de diferencias finitas. </a>
                                 </li>
                             </ul>
                         </li>
