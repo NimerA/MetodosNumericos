@@ -9,13 +9,13 @@ namespace Metodos_Numericos.Models
     {
         public string ecuacion { get; set; }
 
-        public int extremoInferior { get; set; }
+        public double extremoInferior { get; set; }
 
-        public int extremoSuperior { get; set; }
+        public double extremoSuperior { get; set; }
 
-        public int condicionInicial{ get; set; }
+        public double condicionInicial{ get; set; }
 
-        public int numeroEspacios { get; set; }
+        public double numeroEspacios { get; set; }
 
         public Answer_Model ans
         { get; set; }

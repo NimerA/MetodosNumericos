@@ -1,12 +1,11 @@
 ﻿@{
-    ViewBag.Title = "Sistema de ecuaciones por eliminacion de Gauss";
+    ViewBag.Title = "Sistema de Ecuaciones Mediante la Inversa";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <body>
     <ul class="nav nav-pills nav-justified">
         <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
-        <li role="presentation"><a href="#">Historial</a></li>
         <li role="presentation"><a href="#">Ayuda</a></li>
     </ul>
 
@@ -20,7 +19,7 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <label class="control-label col-md-4">Valor Interpolar</label>
+            <label class="control-label col-md-4">Tamaño de Matriz</label>
             <div class="col-md-5">
                 <input id="index" type="text" class="form-control input-sm" placeholder="">
             </div>
@@ -55,7 +54,12 @@
                     <h3>Salida</h3>
                 </div>
                 <div id="ans" class="panel-body">
-                    
+                    <table id="resmatriz" class="table table-striped">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
                 <div class="panel-footer">
                 </div>
@@ -85,7 +89,7 @@
                 event.preventDefault();
                 var y = $("#index").val();
                 for (var i = 0; i < parseInt(y) ; i++) {
-                    for (var j = 0; j < parseInt(y) ; j++) {
+                    for (var j = 0; j < parseInt(y)+1 ; j++) {
                         $("#" + i + "" + j).val("");
                     }
                     
@@ -104,7 +108,7 @@
 
                     for (var i = 0; i < parseInt(y) ; i++) {
                         var c = "";
-                        for (var j = 0; j < parseInt(y); j++) {
+                        for (var j = 0; j < parseInt(y)+1; j++) {
                             c += "<td><input id='"+i+""+j+"' type='text' class='form-control input-sm'></td>";
                         }
                         $("#values > tbody").append("<tr id='"+i+"'>"+c+"</tr>");
@@ -120,7 +124,7 @@
                 var y = $("#index").val();
                 for (var i = 0; i < parseInt(y) ; i++) {
                     values[i] = new Array();
-                    for (var j = 0; j < parseInt(y); j++) {
+                    for (var j = 0; j < parseInt(y)+1; j++) {
                         if ($("#" + i + "" + j).val() === "")
                             alert("Por favor ingrese un valor en la posicion (" + i + "," + j + ")");
                         else
@@ -144,7 +148,25 @@
                     } else {
                         $("#color").attr("class", "panel panel-red");
                     }
-                    $("#ans").text(res.Res);
+
+                    $("#resmatriz > thead > tr").empty();
+                    $("#resmatriz > tbody").empty();
+                    for (var i = 0; i < res.Res[0].length; i++) {
+                        if (i == res.Res[0].length - 1)
+                            $("#resmatriz > thead > tr").append("<th>Solucion</th>");
+                        else
+                            $("#resmatriz > thead > tr").append("<th>" + (i + 1) + "</th>");
+                    }
+
+                    for (var i = 0; i < res.Res.length ; i++) {
+                        var c = "";
+                        for (var j = 0; j < res.Res[i].length; j++) {
+                            c += "<td>"+res.Res[i][j]+"</td>";
+                        }
+                        $("#resmatriz > tbody").append("<tr>" + c + "</tr>");
+                    }
+                    
+                    
                 });
             });
 

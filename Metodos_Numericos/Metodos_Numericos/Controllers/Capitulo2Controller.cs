@@ -214,7 +214,7 @@ namespace Metodos_Numericos.Controllers
             model.ans.Res = mullerMet.Solve();
             model.ans.status = 0;
 
-            if (model.ans.Res[0] == 'S')
+            if (model.ans.Res[0] == 'L')
                 model.ans.status = 1;
             else
                 model.ans.status = 2;

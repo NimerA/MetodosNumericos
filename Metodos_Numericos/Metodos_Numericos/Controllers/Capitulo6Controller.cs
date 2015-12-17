@@ -45,6 +45,7 @@ namespace Metodos_Numericos.Controllers
             catch (Exception)
             {
                 model.ans.message = "Error en los datos";
+                model.ans.status = 2;
             }
             
             return Json(model.ans);
@@ -82,6 +83,7 @@ namespace Metodos_Numericos.Controllers
             catch ( Exception )
             {
                 model.ans.message = "Error en los datos";
+                model.ans.status = 2;
             }
 
             return Json( model.ans );
@@ -94,10 +96,44 @@ namespace Metodos_Numericos.Controllers
 
 
         [HttpPost]
-        public JsonResult SistemaEcuacionesInversa( eliminacionGaussModel model )
+        public JsonResult SistemaEcuacionesInversa(matrizInversaModel model)
         {
-            var values = JsonConvert.DeserializeObject<List<string[]>>( model.values );
-            return Json( "" );
+            var values = JsonConvert.DeserializeObject<List<string[]>>(model.values);
+            MedianteInversa eg = new MedianteInversa();
+            double[,] arr = new double[values.Count, values[0].Length];
+            try
+            {
+                for (int i = 0; i < values.Count; i++)
+                {
+                    for (int j = 0; j < values[0].Length; j++)
+                    {
+                        arr[i, j] = Convert.ToDouble(values[i][j]);
+                    }
+                }
+
+                model.ans = new AnswerArr_Model();
+                double[,] res =eg.Calcular(arr);
+                List<List<double>> r =new List<List<double>>();
+                for (int m=0; m < res.GetLength(0);m++ ){
+                    r.Add(new List<double>());
+                    for (int j=0; j < res.GetLength(1);j++ ){
+                        r[m].Add(res[m,j]);
+                    }
+                }
+                model.ans.Res = r;
+
+                if (model.ans.Res.Count > 0)
+                    model.ans.status = 1;
+                else
+                    model.ans.status = 2;
+            }
+            catch (Exception)
+            {
+                model.ans.message = "Error en los datos";
+                model.ans.status = 2;
+            }
+
+            return Json(model.ans);
         }
         //eliminacionporgauss
         //eliminacion por gauss jordan
@@ -108,5 +144,11 @@ namespace Metodos_Numericos.Controllers
     {
         public string values  { get;set;}
         public AnswerList_Model ans { get; set; }
+    }
+
+    public class matrizInversaModel
+    {
+        public string values { get; set; }
+        public AnswerArr_Model ans { get; set; }
     }
 }
