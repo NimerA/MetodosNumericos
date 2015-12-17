@@ -12,11 +12,15 @@
         <li role="presentation"><a href="#">Ayuda</a></li>
     </ul>
 
-    <form role="form">
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+
         <div class="form-horizontal">
             <hr />
+
             <h2 class="col-md-offset-4">Entrada</h2>
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <label class="control-label col-md-4">Ecuacion F(t,y)</label>
@@ -25,6 +29,7 @@
                     @Html.ValidationMessageFor(model => model.ecuacion, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-md-4">Extremo Inferior (a)</label>
                 <div class="col-md-6">
@@ -32,6 +37,7 @@
                     @Html.ValidationMessageFor(model => model.extremoInferior, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-md-4">Extremo Superior(b)</label>
                 <div class="col-md-6">
@@ -39,6 +45,7 @@
                     @Html.ValidationMessageFor(model => model.extremoSuperior, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-md-4">Condicion Inicial Y(0)</label>
                 <div class="col-md-6">
@@ -46,6 +53,7 @@
                     @Html.ValidationMessageFor(model => model.condicionInicial, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label  col-md-4 left">Numero de Espacios (N)</label>
                 <div class="col-md-6">
@@ -53,109 +61,25 @@
                     @Html.ValidationMessageFor(model => model.numeroEspacios, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-10">
-                    <input type="submit" id="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
-                    <input type="submit" id="clearValues" value="Limpiar valores" class="btn btn-warning" name="submitbutton" />
+                    <input type="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" value="Limpiar" class="btn btn-warning" name="submitbutton" />
                 </div>
             </div>
         </div>
-    </form>
+
         <div>
-            <div class="col-md-offset-4 col-md-6">
-                <div id="color" class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3>Salida</h3>
-                    </div>
-                    <div id="ans" class="panel-body">
-                        <table id="resmatriz" class="table table-striped">
-                            <thead>
-                                <tr></tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                    <div class="panel-footer">
-                    </div>
-                </div>
-            </div>
+            @Html.Action("_Respuesta", Model.ans)
         </div>
 
+    }
 
-    <script src="~/Scripts/jquery-2.1.4.js"></script>
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script>
-    $(document).ready(function () {
-       
-    });
-
-    $("#clear").click(function (event) {
-        event.preventDefault();
-        $("#index").val("");
-        $("#values > tbody").empty();
-        $("#values > thead > tr").empty();
-    });
-
-    $("#clearValues").click(function (event) {
-        event.preventDefault();
-        var y = $("#index").val();
-        for (var i = 0; i < parseInt(y) ; i++) {
-            for (var j = 0; j < parseInt(y) + 1 ; j++) {
-                $("#" + i + "" + j).val("");
-            }
-
-        }
-    });
-
-
-    $("#submit").click(function (event) {
-        event.preventDefault();
-        
-        $.ajax({
-            method: "POST",
-            url: "/Capitulo5/MetodoDeEuler",
-            data: {
-                f: $("#ecuacion").val(), x: $("#extremoInferior").val(), xf: $("#extremoSuperior").val(),
-                y: $("#condicionInicial").val(), n: $("#numeroEspacios").val()
-            }
-        })
-        .success(function (res) {
-            if (res.status === 1) {
-                $("#color").attr("class", "panel panel-green");
-            } else {
-                $("#color").attr("class", "panel panel-red");
-            }
-
-            $("#resmatriz > thead > tr").empty();
-            $("#resmatriz > tbody").empty();                
-            $("#resmatriz > thead > tr").append("<th>index</th><th>t</th><th>w</th>");
-
-
-            for (var i = 0; i < res.Res.length ; i++) {
-                var c = "";
-                for (var j = 0; j < res.Res[i].length; j++) {
-                    c += "<td>" + res.Res[i][j] + "</td>";
-                }
-                
-            }
-
-            $.each(res.Res, function (index, item) {
-                $("#resmatriz > tbody").append("<tr><td>" + index + "</td><td>" + item.x + "</td><td>" + item.y + "</td></tr>");
-            });
-
-        });
-    });
-
-    $("body").on("click", "#values .removeRow", function () {
-        event.preventDefault();
-        $(this).closest("tr").remove();
-    });
-
-
-
-
-    </script>
-
 </body>
 <footer></footer>

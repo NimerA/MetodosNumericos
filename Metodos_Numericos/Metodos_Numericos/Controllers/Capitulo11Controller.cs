@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Metodos_Numericos.Models;
 using Metodos_Numericos.Algorithms;
+using System.Text;
 
 namespace Metodos_Numericos.Controllers
 {
@@ -20,35 +21,57 @@ namespace Metodos_Numericos.Controllers
         public ActionResult DiferenciasFinitas()
         {
             DiferenciasFinitas_Model model = new DiferenciasFinitas_Model();
-            model.px = "cos(x)-x";
-            model.qx = "cos(x)-x";
-            model.rx = "cos(x)-x";
-            model.a = 0.01;
-            model.b = 7;
-            model.alpha = 0.4;
-            model.beta = 0.3;
-            model.n = 3;
+            model.px = "-2/x";
+            model.qx = "2/(x^2)";
+            model.rx = "(sin(ln(x)))/(x^2)";
+            model.a = 1;
+            model.b = 3;
+            model.alpha = 1;
+            model.beta = 2;
+            model.n = 9;
           //  PosicionFalsa Fpos = new PosicionFalsa();
             // model.ans = new Answer_Model();
           //  model.ans.Res = Fpos.Calculate(model.ecuacion, model.aproximacionP0, model.aproximacionP1, model.toleracia, model.iteraciones);
             //  model.ans.status = 0;
+            MetodoDiferenciasFinitas resultado = new MetodoDiferenciasFinitas();
             model.ans = new Answer_Model();
-            model.ans.Res = "FALTA LINKEAR EL AGORITMO";
+            List<Pointd> lista = resultado.Calcular(model.px, model.qx, model.rx, model.a, model.b, model.alpha, model.beta, model.n);
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            model.ans.status = 0;
+            for (int x = 0; x < lista.Count; x++)
+            {
+                sb.AppendLine(x.ToString());
+            }
+            string resu = sb.ToString();
+            model.ans.Res = resu;
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult DiferenciasFinitas(DiferenciasFinitas_Model model, string submitbutton)
+        public ActionResult DiferenciasFinitas(DiferenciasFinitas_Model model)
         {
 
-            //PosicionFalsa Fpos = new PosicionFalsa();
-            //model.ans = new Answer_Model();
-            //model.ans.Res = Fpos.Calculate(model.ecuacion, model.aproximacionP0, model.aproximacionP1, model.toleracia, model.iteraciones);
-            //if (model.ans.Res[0] == 'L')
-            //    model.ans.status = 1;
-            //else
-            //    model.ans.status = 2;
+            MetodoDiferenciasFinitas resultado = new MetodoDiferenciasFinitas();
+            model.ans = new Answer_Model();
+            List<Pointd> lista = resultado.Calcular(model.px, model.qx, model.rx, model.a, model.b, model.alpha, model.beta, model.n);
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            
+            if (lista != null){
+                model.ans.status = 1;
+                for (int x = 0; x < lista.Count; x++)
+            {
+                sb.AppendLine(x.ToString());
+            }
+            string resu = sb.ToString();
+            model.ans.Res = resu;
+            }
+            else {
+                model.ans.Res = "Metodo Fracaso";
+                model.ans.status = 2;
+            }
             return View(model);
         }
 

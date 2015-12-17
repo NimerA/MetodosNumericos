@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using Metodos_Numericos.Algorithms;
 using Metodos_Numericos.Models;
 using Newtonsoft.Json;
 
@@ -21,34 +20,8 @@ namespace Metodos_Numericos.Controllers
         [HttpPost]
         public JsonResult EliminacionDeGauss(eliminacionGaussModel model)
         {
-            var values = JsonConvert.DeserializeObject<List<string[]>>( model.values );
-            EliminacionGauss eg=new EliminacionGauss();
-            double[,] arr = new double[values.Count, values[0].Length];
-            try
-            {
-                for ( int i = 0; i < values.Count; i++ )
-                {
-                    for ( int j = 0; j < values[ 0 ].Length; j++ )
-                    {
-                        arr[ i, j ] = Convert.ToDouble( values[ i ][ j ] );
-                    }
-                }
-
-                model.ans = new AnswerList_Model();
-                model.ans.Res = eg.Calcular( arr );
-
-                if ( model.ans.Res.Count>0 )
-                    model.ans.status = 1;
-                else
-                    model.ans.status = 2;
-            }
-            catch (Exception)
-            {
-                model.ans.message = "Error en los datos";
-                model.ans.status = 2;
-            }
-            
-            return Json(model.ans);
+            var values = JsonConvert.DeserializeObject<List<List<string>>>( model.values );
+            return Json("");
         }
 
         public ActionResult EliminacionDeGaussJordan()
@@ -59,34 +32,8 @@ namespace Metodos_Numericos.Controllers
         [HttpPost]
         public JsonResult EliminacionDeGaussJordan( eliminacionGaussModel model )
         {
-            var values = JsonConvert.DeserializeObject<List<string[]>>( model.values );
-            GaussJordan eg=new GaussJordan();
-            double[,] arr = new double[ values.Count, values[ 0 ].Length ];
-            try
-            {
-                for ( int i = 0; i < values.Count; i++ )
-                {
-                    for ( int j = 0; j < values[ 0 ].Length; j++ )
-                    {
-                        arr[ i, j ] = Convert.ToDouble( values[ i ][ j ] );
-                    }
-                }
-
-                model.ans = new AnswerList_Model();
-                model.ans.Res = eg.Calcular( arr );
-
-                if ( model.ans.Res.Count > 0 )
-                    model.ans.status = 1;
-                else
-                    model.ans.status = 2;
-            }
-            catch ( Exception )
-            {
-                model.ans.message = "Error en los datos";
-                model.ans.status = 2;
-            }
-
-            return Json( model.ans );
+            var values = JsonConvert.DeserializeObject<List<List<string>>>( model.values );
+            return Json( "" );
         }
 
         public ActionResult SistemaEcuacionesInversa()
@@ -96,44 +43,10 @@ namespace Metodos_Numericos.Controllers
 
 
         [HttpPost]
-        public JsonResult SistemaEcuacionesInversa(matrizInversaModel model)
+        public JsonResult SistemaEcuacionesInversa( eliminacionGaussModel model )
         {
-            var values = JsonConvert.DeserializeObject<List<string[]>>(model.values);
-            MedianteInversa eg = new MedianteInversa();
-            double[,] arr = new double[values.Count, values[0].Length];
-            try
-            {
-                for (int i = 0; i < values.Count; i++)
-                {
-                    for (int j = 0; j < values[0].Length; j++)
-                    {
-                        arr[i, j] = Convert.ToDouble(values[i][j]);
-                    }
-                }
-
-                model.ans = new AnswerArr_Model();
-                double[,] res =eg.Calcular(arr);
-                List<List<double>> r =new List<List<double>>();
-                for (int m=0; m < res.GetLength(0);m++ ){
-                    r.Add(new List<double>());
-                    for (int j=0; j < res.GetLength(1);j++ ){
-                        r[m].Add(res[m,j]);
-                    }
-                }
-                model.ans.Res = r;
-
-                if (model.ans.Res.Count > 0)
-                    model.ans.status = 1;
-                else
-                    model.ans.status = 2;
-            }
-            catch (Exception)
-            {
-                model.ans.message = "Error en los datos";
-                model.ans.status = 2;
-            }
-
-            return Json(model.ans);
+            var values = JsonConvert.DeserializeObject<List<List<string>>>( model.values );
+            return Json( "" );
         }
         //eliminacionporgauss
         //eliminacion por gauss jordan
@@ -143,12 +56,6 @@ namespace Metodos_Numericos.Controllers
     public class eliminacionGaussModel
     {
         public string values  { get;set;}
-        public AnswerList_Model ans { get; set; }
-    }
-
-    public class matrizInversaModel
-    {
-        public string values { get; set; }
-        public AnswerArr_Model ans { get; set; }
+        public Answer_Model ans { get;set;}
     }
 }
