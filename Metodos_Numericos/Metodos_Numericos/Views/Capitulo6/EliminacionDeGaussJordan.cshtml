@@ -1,11 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Sistema de ecuaciones por eliminacion de Gauss Jordan";
+    ViewBag.Title = "Sistema de ecuaciones por eliminacion de Gauss";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <body>
     <ul class="nav nav-pills nav-justified">
         <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
+        <li role="presentation"><a href="#">Historial</a></li>
         <li role="presentation"><a href="#">Ayuda</a></li>
     </ul>
 
@@ -19,20 +20,13 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <label class="control-label col-md-4">Numero Ecuaciones</label>
+            <label class="control-label col-md-4">Valor Interpolar</label>
             <div class="col-md-5">
                 <input id="index" type="text" class="form-control input-sm" placeholder="">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-4">Numero Variables</label>
-            <div class="col-md-5">
                 <input id="variables" type="text" class="form-control input-sm" placeholder="">
             </div>
             <div class="col-md-1"><input type="submit" id="create" value="+" class="btn btn-primary" /></div>
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-4 col-md-6">
@@ -154,9 +148,7 @@
                     } else {
                         $("#color").attr("class", "panel panel-red");
                     }
-                    $.each(res.Res, function (index, value) {
-                        $("#ans").append("<li>" + index + " => " + value + "</li>");
-                    });
+                    $("#ans").text(res.Res);
                 });
             });
 

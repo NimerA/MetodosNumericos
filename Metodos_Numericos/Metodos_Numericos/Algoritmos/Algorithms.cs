@@ -876,7 +876,7 @@ namespace Metodos_Numericos.Algorithms
                         Y0 = Y0 + (h * result);
                         X0 = X0 + (h);
 
-                        list.Add(new Pointd(Math.Round(X0,2), Y0));
+                        list.Add(new Pointd(X0, Y0));
                     }
 
                     return list;
@@ -928,7 +928,7 @@ namespace Metodos_Numericos.Algorithms
                         k4 = exp4.Parse(function);
                         Y0 = Y0 + ((h / 6) * (k1 + (2 * k2) + (2 * k3) + k4));
                         X0 = X0 + h;
-                        list.Add(new Pointd(Math.Round(X0, 2), Y0));
+                        list.Add(new Pointd(X0, Y0));
                     }
 
                     return list;
@@ -1133,99 +1133,6 @@ namespace Metodos_Numericos.Algorithms
 
         public class MedianteInversa 
         {
-            public double[,] Calcular(double[,] a)
-            {
-                //PASO 1
-                int i, j, k, s;
-                int y = a.GetLength(0);
-                int x = a.GetLength(1);
-                double[,] m1 = new double[x * 2, y * 2];
-                double[,] m2 = new double[y, x];
-                double coef, elemento;
-                double[] aux = new double[y * 2];
-                double[] vecSol = new double[y];
-                double[] solFinal = new double[y];
-                k = y;
-
-                for (i = 0; i < y; i++)
-                {
-                    for (j = 0; j < (x - 1); j++)
-                    {
-                        m1[i, j] = a[i, j];
-                    }
-                }
-
-                for (i = 0; i < y; i++)
-                {
-                    vecSol[i] = a[i, x - 1];
-                }
-
-                //PASO 2 
-                for (i = 0; i < k; i++)
-                {
-                    for (j = k; j < 2 * k; j++)
-                    {
-                        if (i == (j - k))
-                            m1[i, j] = 1;
-                        else
-                            m1[i, j] = 0;
-                    }
-                }
-                //Iteraciones
-                for (s = 0; s < k; s++)
-                {
-                    elemento = m1[s, s];
-                    for (j = 0; j < 2 * k; j++)
-                        m1[s, j] = m1[s, j] / elemento;
-
-                    for (i = 0; i < k; i++)
-                    {
-                        if (i != s)
-                        {
-                            coef = m1[i, s];
-                            for (j = 0; j < 2 * k; j++)
-                                aux[j] = m1[s, j] * (coef * -1);
-                            for (j = 0; j < 2 * k; j++)
-                                m1[i, j] = m1[i, j] + aux[j];
-                        }
-                    }
-                }
-                //PASO 3
-                for (i = 0; i < k; i++)
-                {
-                    for (j = k; j < 2 * k; j++)
-                        if (double.IsNaN(m1[i, j]))
-                        {
-                            throw new Exception("Error al revisar matriz");
-                        }
-                }
-                //PASO 4
-                for (i = 0; i < k; i++)
-                {
-                    for (j = k; j < 2 * k; j++)
-                    {
-                        m2[i, (j - k)] = (Math.Round(m1[i, j], 3));
-                    }
-                }
-
-                //PASO 5
-                double tempRes = 0;
-                for (i = 0; i < k; i++)
-                {
-                    for (j = k; j < 2 * k; j++)
-                    {
-                        tempRes += (m1[i, j] * vecSol[j - k]);
-                    }
-                    solFinal[i] = tempRes;
-                    tempRes = 0;
-                }
-                for (i = 0; i < k; i++)
-                    m2[i, (x - 1)] = (Math.Round(solFinal[i], 3));
-
-
-                return m2;
-
-            }
 
         }
         //========================= REGRESION LINEAL ================================

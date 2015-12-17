@@ -7,12 +7,11 @@ namespace Metodos_Numericos.Models
 {
     public class SolucionEdoRK_Model : BaseModel
     {
-        public string ecuacion { get; set; }
-        public double extremoInferior { get; set; }
-        public double extremoSuperior { get; set; }
-        public double condicionInicial { get; set; }
-        public int numeroEspacios { get; set; }
-        public Answer_Model ans
-        { get; set; }
+        public string function{get; set;}
+        public double x0{get; set;}
+        public double xf {get; set;}
+        public double y0 {get; set;}
+        public int n { get; set; }
+        public Answer_Model ans { get; set; }
     }
 }

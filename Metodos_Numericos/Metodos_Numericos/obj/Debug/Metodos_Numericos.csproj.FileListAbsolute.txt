@@ -1,3 +1,21 @@
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll.config
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.pdb
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.Deployment.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.Razor.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.xml
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.xml
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.Deployment.xml
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Webpages.Razor.xml
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.xml
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.csprojResolveAssemblyReference.cache
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.dll
+c:\users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.pdb
+C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.dll
+C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.xml
 C:\Users\Alex\Documents\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.csprojResolveAssemblyReference.cache
 C:\Users\Alex\Documents\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.dll
 C:\Users\Alex\Documents\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll.config
@@ -39,45 +57,3 @@ C:\Users\User\Desktop\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Nume
 C:\Users\User\Desktop\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.dll
 C:\Users\User\Desktop\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.pdb
 C:\Users\User\Desktop\Metodos_Numericos\Metodos_Numericos\bin\info.lundin.math.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll.config
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.pdb
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\info.lundin.math.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\Newtonsoft.Json.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Razor.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\Newtonsoft.Json.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Razor.xml
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.csprojResolveAssemblyReference.cache
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.dll
-C:\Users\Alex Fernandez\Desktop\MetodosNumericos\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.pdb
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll.config
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Metodos_Numericos.pdb
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\info.lundin.math.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Newtonsoft.Json.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Deployment.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Razor.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\Newtonsoft.Json.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Helpers.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Mvc.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.Razor.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Deployment.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\bin\System.Web.WebPages.Razor.xml
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.csprojResolveAssemblyReference.cache
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.dll
-C:\Users\nimer\documents\visual studio 2013\Projects\Metodos_Numericos\Metodos_Numericos\obj\Debug\Metodos_Numericos.pdb

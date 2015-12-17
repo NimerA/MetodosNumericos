@@ -70,21 +70,8 @@
         <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
         <script>
             $(document).ready(function() {
-                $("#index").val("3");
+                $("#index").val("5");
                 $("#create").trigger("click");
-                $("#00").val("4");
-                $("#01").val("-9");
-                $("#02").val("2");
-                $("#03").val("5");
-                $("#10").val("2");
-                $("#11").val("-4");
-                $("#12").val("6");
-                $("#13").val("3");
-                $("#20").val("1");
-                $("#21").val("-1");
-                $("#22").val("3");
-                $("#23").val("4");
-                $("#submit").trigger("click");
             });
 
             $("#clear").click(function(event) {
@@ -157,13 +144,7 @@
                     } else {
                         $("#color").attr("class", "panel panel-red");
                     }
-                    $.each(res.Res, function (index, value) {
-                        if (index == 0)
-                            $("#ans").append("<li>Determinante => " + value + "</li>");
-                        else
-                            $("#ans").append("<li>Incognitas "+index+" => "+value+"</li>");
-                    });
-                    
+                    $("#ans").text(res.Res);
                 });
             });
 

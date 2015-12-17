@@ -7,7 +7,7 @@ namespace Metodos_Numericos.Models
 {
     public class RegresionLineal_Model : BaseModel
     {
-        public double inter { get; set; }
+        public int inter { get; set; }
         public List<Point> values { get; set; }
         public Answer_Model ans { get; set; }
     }

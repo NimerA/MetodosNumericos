@@ -31,8 +31,8 @@ namespace Metodos_Numericos.Controllers
 
             for ( int i=0; i < model.values.Count; i++ )
             {
-                list1[ i ] = ( Double.Parse( model.values[i].y) );
-                list2[ i ] = ( Double.Parse( model.values[i].x) );
+                list1[ i ] = ( Double.Parse( model.values[i].x) );
+                list2[ i ] = ( Double.Parse( model.values[i].y) );
             }
             model.ans = new Answer_Model();
 

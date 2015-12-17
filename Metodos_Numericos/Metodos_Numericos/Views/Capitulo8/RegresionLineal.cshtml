@@ -22,7 +22,7 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            <label class="control-label col-md-4">Valor Interpolar</label>
+            <label class="control-label col-md-4">Número de Iteraciones(n)</label>
             <div class="col-md-6">
                 @Html.EditorFor(model => model.inter, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.inter, "", new { @class = "text-danger" })
@@ -36,7 +36,7 @@
             <div class="col-md-offset-4 col-md-6">
                 <table id="values" class="table table-striped">
                     <thead>
-                        <tr><th>x</th><th>F(x)</th><th></th></tr>
+                        <tr><th>x</th><th>y</th><th></th></tr>
                     </thead>
                     <tbody>
                     </tbody>
@@ -74,10 +74,9 @@
         <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
         <script>
             $(document).ready(function() {
-                $("#inter").val("2.5");
-                add(1, 4);
-                add(2, 5);
-                add(3, 6);
+                $("#inter").val("1");
+                add(0, 0.120);
+                add(2, 0.153);
                 $("#submit").trigger("click");
             });
 
@@ -103,7 +102,7 @@
             $("#submit").click(function (event) {
                 event.preventDefault();
                 if ($("#inter").val() === "") {
-                    alert("Ingrese valor a interpolar!");
+                    alert("Ingrese numero de Iteraciones!");
                     return;
                 }
 

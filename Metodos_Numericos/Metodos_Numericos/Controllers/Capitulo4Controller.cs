@@ -43,10 +43,17 @@ namespace Metodos_Numericos.Controllers
         [HttpGet]
         public ActionResult Simpson()
         {
-            Simpson_Model mE = new Simpson_Model();
-            mE.ans = new Answer_Model();
-            mE.ans.Res = "salida";
-            return View(mE);
+            Simpson_Model model = new Simpson_Model();
+            model.function = "sin(x)";
+            model.a=0;
+            model.b=3.1416;
+            model.n=20;
+
+
+            Simpson resultado = new Simpson();
+            model.ans = new Answer_Model();
+            model.ans.Res = resultado.Calcular(model.function, model.a, model.b, model.n);
+            return View(model);
         }
 
         [HttpPost]
@@ -68,8 +75,13 @@ namespace Metodos_Numericos.Controllers
         public ActionResult CuadraturaGauss()
         {
             CuadraturaGauss_Model mE = new CuadraturaGauss_Model();
+            mE.function = "x^3+2x^2";
+            mE.a = 1;
+            mE.b = 5;
+            mE.n = 2;
+            CuadraturaGauss resultado = new CuadraturaGauss();
             mE.ans = new Answer_Model();
-            mE.ans.Res = "salida";
+            mE.ans.Res = resultado.Calcular(mE.function, mE.a, mE.b, mE.n);
             return View(mE);
         }
 
@@ -93,7 +105,9 @@ namespace Metodos_Numericos.Controllers
         {
             DiferenciacionNumerica_Model mE = new DiferenciacionNumerica_Model();
             mE.ans = new Answer_Model();
-            mE.ans.Res = "";
+            mE.n = 2;
+            mE.xd=1.5;
+            mE.ans.Res = "30";
             return View(mE);
         }
 
@@ -113,7 +127,7 @@ namespace Metodos_Numericos.Controllers
               }
               model.ans = new Answer_Model();
 
-              model.ans.Res = dn.Calcular(list1, list2,model.xd, model.n);
+              model.ans.Res = dn.Calcular(list2, list1,model.xd, model.n);
 
               if (model.ans.Res[0] == 'L')
                   model.ans.status = 1;

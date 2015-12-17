@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <body>
     <ul class="nav nav-pills nav-justified">
         <li role="presentation" class="active"><a href="#">@ViewBag.Title</a></li>
@@ -13,160 +14,145 @@
     </ul>
 
     <form role="form">
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
+        <div class="form-horizontal">
+            <hr />
 
-        <h2 class="col-md-offset-4">Entrada</h2>
+            <h2 class="col-md-offset-4">Entrada</h2>
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <label class="control-label col-md-4">Valor de N</label>
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.n, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.n, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-4">Número de Iteraciones</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.n, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.n, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4">Valor de XD</label>
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.xd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.xd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-2"><input id="x" type="text" class="form-control input-sm" placeholder="x"></div>
+                <div class="col-md-2"><input id="y" type="text" class="form-control input-sm" placeholder="F(x)"></div>
+                <div class="col-md-1"><input type="submit" id="add" value="+" class="btn btn-primary" /></div>
+                <div class="col-md-offset-4 col-md-6">
+                    <table id="values" class="table table-striped">
+                        <thead>
+                            <tr><th>x</th><th>F(x)</th><th></th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <input type="submit" id="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
+                    <input type="submit" id="clear" value="Limpiar" class="btn btn-warning" name="submitbutton" />
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-4">Valor de XD</label>
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.xd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.xd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-2"><input id="x" type="text" class="form-control input-sm" placeholder="x"></div>
-            <div class="col-md-2"><input id="y" type="text" class="form-control input-sm" placeholder="F(x)"></div>
-            <div class="col-md-1"><input type="submit" id="add" value="+" class="btn btn-primary" /></div>
+        <div>
             <div class="col-md-offset-4 col-md-6">
-                <table id="values" class="table table-striped">
-                    <thead>
-                        <tr><th>x</th><th>F(x)</th><th></th></tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                <div id="color" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Salida</h3>
+                    </div>
+                    <div id="ans" class="panel-body">
 
-        <div class="form-group">
-            <div class="col-md-offset-4 col-md-10">
-                <input type="submit" id="submit" value="Evaluar" class="btn btn-primary" name="submitbutton" />
-                <input type="submit" id="clear" value="Limpiar" class="btn btn-warning" name="submitbutton" />
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="col-md-offset-4 col-md-6">
-            <div id="color" class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>Salida</h3>
-                </div>
-                <div id="ans" class="panel-body">
-                    
-                </div>
-                <div class="panel-footer">
+                    </div>
+                    <div class="panel-footer">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
 
-        <script src="~/Scripts/jquery-2.1.4.js"></script>
-        <script src="~/Scripts/jquery.validate.min.js"></script>
-        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $("#n").val("2");
-                add(1, 4);
-                add(2, 5);
-                add(3, 6);
-                $("#submit").trigger("click");
-            });
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#n").val("2");
+            $("#xd").val("1.5");
+            add(1, 1);
+            add(2, 4);
+            add(3, 9);
+            $("#submit").trigger("click");
+        });
 
-            $(document).ready(function () {
-                $("#xd").val("1.5");
-                add(1, 4);
-                add(2, 5);
-                add(3, 6);
-                $("#submit").trigger("click");
-            });
+        $("#clear").click(function (event) {
+            event.preventDefault();
+            $("#inter").val("");
+            $("#values > tbody").empty();
+        });
 
-            $("#clear").click(function(event) {
-                event.preventDefault();
-                $("#inter").val("");
-                $("#values > tbody").empty();
-            });
+        $("#add").click(function (event) {
+            event.preventDefault();
+            var y = $("#y").val();
+            var x = $("#x").val();
+            if (y !== "" & x !== "") {
+                add(x, y);
+                $("#y").val("");
+                $("#x").val("");
+            }
+            else
+                alert("Ingrese los valores en los campos 'F(x)' y 'x'");
+        });
 
-            $("#add").click(function (event) {
-                event.preventDefault();
-                var y = $("#y").val();
-                var x = $("#x").val();
-                if (y !== "" & x !== "") {
-                    add(x, y);
-                    $("#y").val("");
-                    $("#x").val("");
-                }
-                else
-                    alert("Ingrese los valores en los campos 'F(x)' y 'x'");
-            });
-
-            $("#submit").click(function (event) {
-                event.preventDefault();
-                if ($("#n").val() === "") {
-                    alert("Ingrese valor a N!");
-                    return;
-                }
-
-                $("#submit").click(function (event) {
-                    event.preventDefault();
-                    if ($("#xd").val() === "") {
-                        alert("Ingrese valor a XD!");
-                        return;
-                    }
-
-
-                var values = [];
-                $("#values > tbody tr").each(function (index, item) {
-                    values.push({ x: item.cells[0].textContent, y: item.cells[1].textContent });
-                });
-
-                if (values.length === 0) {
-                    alert("Ingrese valores F(x),x en la tabla");
-                    return;
-                }
-
-                $.ajax({
-                    method: "POST",
-                    url: "/Capitulo4/DiferenciacionNumerica",
-                    data: { inter: $("#inter").val(), values: values }
-                })
-                .success(function (res) {
-                    if (res.status === 1) {
-                        $("#color").attr("class", "panel panel-green");
-                    } else {
-                        $("#color").attr("class", "panel panel-red");
-                    }
-                    $("#ans").text(res.Res);
-                });
-            });
-
-            $("body").on("click", "#values .removeRow", function(){
-                event.preventDefault();
-                $(this).closest("tr").remove();
-            });
-
-            function add(x,y) {
-                $("#values > tbody").append("<tr><td>" + x + "</td><td>" + y + "</td><td><input type='submit' value='x' class='removeRow btn btn-primary' /></tr>");
+        $("#submit").click(function (event) {
+            event.preventDefault();
+            if ($("#inter").val() === "") {
+                alert("Ingrese valor a interpolar!");
+                return;
             }
 
 
-        </script>
+            var values = [];
+            $("#values > tbody tr").each(function (index, item) {
+                values.push({ x: item.cells[0].textContent, y: item.cells[1].textContent });
+            });
+
+            if (values.length === 0) {
+                alert("Ingrese valores F(x),x en la tabla");
+                return;
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/Capitulo4/DiferenciacionNumerica",
+                data: { n: $("#n").val(), xd: $("#xd").val(), values: values }
+            })
+            .success(function (res) {
+                if (res.status === 1) {
+                    $("#color").attr("class", "panel panel-green");
+                } else {
+                    $("#color").attr("class", "panel panel-red");
+                }
+                $("#ans").text(res.Res);
+            });
+        });
+
+        $("body").on("click", "#values .removeRow", function () {
+            event.preventDefault();
+            $(this).closest("tr").remove();
+        });
+
+        function add(x, y) {
+            $("#values > tbody").append("<tr><td>" + x + "</td><td>" + y + "</td><td><input type='submit' value='x' class='removeRow btn btn-primary' /></tr>");
+        }
+
+
+    </script>
 </body>
 <footer></footer>
 
